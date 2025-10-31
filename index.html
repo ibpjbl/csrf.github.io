@@ -9,7 +9,7 @@
   <p id="result">Loading...</p>
 
   <script>
-    fetch("http://3.112.25.245:5000/main")
+    fetch("http://3.112.25.245/main")
       .then(r => r.json())
       .then(data => {
         document.getElementById("result").textContent = data.message;
