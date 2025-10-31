@@ -5,7 +5,7 @@ fetch('https://cats.is-course.ru/settings', {
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: 'new_password=Abcdef_1234567&confirm_password=Abcdef_1234567'
+    body: 'password=Abcdef_1234567&confirm-password=Abcdef_1234567'
 })
 .then(response => {
     // Проверяем результат
